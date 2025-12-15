@@ -14,7 +14,7 @@ const defaultContent = {
         title: "Quem Somos",
         text1: "Treinamos para vencer, mas lutamos para evoluir. Uma irmandade moldada no tatame, onde cada gota de suor constrói o caminho para o topo.",
         quote: "Cada medalha no peito carrega a esperança de um futuro brilhante. O Jiu-Jitsu é mais que um esporte, é nossa ferramenta de transformação.",
-        image: import.meta.env.BASE_URL + "about-overlay.png"
+        image: import.meta.env.BASE_URL + "about-scribbles-new.jpg"
     },
     athletes: [
         {
@@ -261,7 +261,7 @@ const defaultContent = {
             answer: "Toda ajuda fortalece nossa armadura! Se você deseja doar kimonos, suplementos, milhas aéreas ou um valor específico fora dos planos, chame nossa equipe no botão de WhatsApp abaixo."
         }
     ],
-    version: 1.5 // Increment this to force update checks
+    version: 1.6 // Increment this to force update checks
 };
 
 export function ContentProvider({ children }) {

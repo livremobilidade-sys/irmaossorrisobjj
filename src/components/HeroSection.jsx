@@ -8,7 +8,7 @@ export default function HeroSection({ onOpenPricing }) {
     const { hero } = content
 
     return (
-        <section id="hero" className="relative flex flex-col items-center justify-center pt-20 pb-0 overflow-visible z-10">
+        <section id="hero" className="relative flex flex-col items-center justify-center pt-20 pb-32 min-h-[90vh] md:min-h-screen overflow-visible z-10">
 
             {/* Background Image Layer */}
             <div className="absolute inset-0 z-0">

@@ -1,12 +1,44 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, Trophy, Target, Award } from 'lucide-react'
+import { X, Trophy, Target, Award, ChevronRight, ChevronsRight } from 'lucide-react'
 import { useContent } from '../context/ContentContext'
 
 export default function AthletesSection() {
     const [selectedAthlete, setSelectedAthlete] = useState(null)
+    const containerRef = useRef(null)
     const { content } = useContent()
     const { athletes } = content
+
+    // Mobile Auto-Scroll Loop
+    useEffect(() => {
+        const container = containerRef.current;
+        if (!container) return;
+
+        let interval;
+        const startAutoScroll = () => {
+            interval = setInterval(() => {
+                // Only scroll if window is mobile size (optional, but good for UX)
+                if (window.innerWidth >= 768) return;
+
+                if (container) {
+                    const maxScroll = container.scrollWidth - container.clientWidth;
+                    const cardWidth = 300; // approx card width + gap
+
+                    if (container.scrollLeft >= maxScroll - 10) {
+                        // Reset to start
+                        container.scrollTo({ left: 0, behavior: 'smooth' });
+                    } else {
+                        // Scroll next
+                        container.scrollBy({ left: cardWidth, behavior: 'smooth' });
+                    }
+                }
+            }, 3000); // 3 seconds per slide
+        };
+
+        startAutoScroll();
+
+        return () => clearInterval(interval);
+    }, []);
 
     return (
         <section id="athletes" className="py-24 bg-black relative overflow-hidden">
@@ -21,77 +53,98 @@ export default function AthletesSection() {
                     <p className="text-xl text-gray-400">Os heróis do tatame</p>
                 </div>
 
-                {/* Cards Container - Mobile Scroll / Desktop Grid */}
-                <div className="flex md:grid md:grid-cols-2 lg:grid-cols-4 gap-8 overflow-x-auto pb-12 md:pb-0 snap-x snap-mandatory px-4 md:px-0 -mx-4 md:mx-0 scrollbar-hide pt-16">
-                    {athletes.map((athlete, index) => (
-                        <div key={index} onClick={() => setSelectedAthlete(athlete)} className="min-w-[280px] md:min-w-0 snap-center relative group cursor-pointer">
+                {/* Container Wrapper for Indicator Positioning */}
+                <div className="relative">
 
-                            {/* The Card Base (Glass) */}
-                            <div className={`
-                                relative mt-12 bg-[#111]/40 backdrop-blur-xl rounded-3xl p-6 pt-16
-                                border ${athlete.color} border-t-2 border-b-0 border-x-0
-                                shadow-[0_10px_40px_rgba(0,0,0,0.5)]
-                                transition-all duration-300 group-hover:bg-[#1a1a1a]/60 group-hover:-translate-y-2
-                            `}>
-                                {/* Pop-out Image Area */}
-                                <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-40 h-48 z-20">
-                                    <div className="relative w-full h-full">
-                                        {/* Glow behind head */}
-                                        <div className="absolute inset-0 bg-neon-green/20 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    {/* Cards Container - Mobile Scroll / Desktop Grid */}
+                    <div
+                        ref={containerRef}
+                        className="flex md:grid md:grid-cols-2 lg:grid-cols-4 gap-6 overflow-x-auto pb-8 md:pb-0 snap-x snap-mandatory px-4 md:px-0 -mx-4 md:mx-0 scrollbar-hide pt-16"
+                    >
+                        {athletes.map((athlete, index) => (
+                            <div key={index} onClick={() => setSelectedAthlete(athlete)} className="min-w-[280px] md:min-w-0 snap-center relative group cursor-pointer pl-1">
 
-                                        {/* Masked Image */}
-                                        <img
-                                            src={athlete.img}
-                                            alt={athlete.name}
-                                            className="w-full h-full object-cover rounded-2xl shadow-2xl relative z-10"
-                                            style={{
-                                                maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)',
-                                                WebkitMaskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)'
-                                            }}
-                                        />
+                                {/* The Card Base (Glass) */}
+                                <div className={`
+                                    relative mt-12 bg-[#111]/40 backdrop-blur-xl rounded-3xl p-6 pt-16
+                                    border border-white/10 ${athlete.color} border-t-4
+                                    shadow-lg shadow-black/50
+                                    transition-all duration-300 
+                                    group-hover:bg-[#1a1a1a]/80 group-hover:border-opacity-100 group-hover:-translate-y-2 group-hover:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.8)]
+                                `}>
+                                    {/* Pop-out Image Area */}
+                                    <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-40 h-48 z-20">
+                                        <div className="relative w-full h-full">
+                                            {/* Glow behind head */}
+                                            <div className="absolute inset-0 bg-neon-green/20 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
-                                        {/* Floating Holographic Icons */}
-                                        <div className="absolute -right-4 top-10 animate-float-slow bg-black/80 p-2 rounded-full border border-white/20 shadow-lg">
-                                            <span className="text-lg">🥋</span>
-                                        </div>
-                                        <div className="absolute -left-4 top-20 animate-float-delayed bg-black/80 p-2 rounded-full border border-white/20 shadow-lg">
-                                            <span className="text-lg">⚡</span>
+                                            {/* Masked Image */}
+                                            <img
+                                                src={athlete.img}
+                                                alt={athlete.name}
+                                                className="w-full h-full object-cover rounded-2xl shadow-2xl relative z-10"
+                                                style={{
+                                                    maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)',
+                                                    WebkitMaskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)'
+                                                }}
+                                            />
+
+                                            {/* Floating Holographic Icons */}
+                                            <div className="absolute -right-4 top-10 animate-float-slow bg-black/80 p-2 rounded-full border border-white/20 shadow-lg">
+                                                <span className="text-lg">🥋</span>
+                                            </div>
+                                            <div className="absolute -left-4 top-20 animate-float-delayed bg-black/80 p-2 rounded-full border border-white/20 shadow-lg">
+                                                <span className="text-lg">⚡</span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                {/* Content */}
-                                <div className="text-center mt-6">
-                                    <h3 className="text-2xl font-black text-white uppercase italic tracking-wider mb-1">
-                                        {athlete.name}
-                                    </h3>
-                                    <p className={`text-sm font-bold uppercase tracking-widest mb-6 ${athlete.color.replace('border-', 'text-')}`}>
-                                        "{athlete.nickname}"
-                                    </p>
+                                    {/* Content */}
+                                    <div className="text-center mt-6">
+                                        <h3 className="text-2xl font-black text-white uppercase italic tracking-wider mb-1">
+                                            {athlete.name}
+                                        </h3>
+                                        <p className={`text-sm font-bold uppercase tracking-widest mb-6 ${athlete.color.replace('border-', 'text-')}`}>
+                                            "{athlete.nickname}"
+                                        </p>
 
-                                    {/* Stats Grid */}
-                                    <div className="grid grid-cols-2 gap-3 text-left bg-black/20 rounded-xl p-4 border border-white/5">
-                                        <div>
-                                            <p className="text-[10px] text-gray-500 uppercase font-bold tracking-wider">Idade</p>
-                                            <p className="text-white font-bold text-sm">{athlete.age}</p>
-                                        </div>
-                                        <div>
-                                            <p className="text-[10px] text-gray-500 uppercase font-bold tracking-wider">Faixa</p>
-                                            <p className="text-white font-bold text-sm">{athlete.belt}</p>
-                                        </div>
-                                        <div className="col-span-2 mt-1">
-                                            <p className="text-[10px] text-gray-500 uppercase font-bold tracking-wider">Categoria</p>
-                                            <p className="text-white font-bold text-sm">{athlete.category}</p>
-                                        </div>
-                                        <div className="col-span-2 mt-2 pt-2 border-t border-white/5">
-                                            <p className="text-[10px] text-gray-500 uppercase font-bold tracking-wider">Superpoder</p>
-                                            <p className="text-neon-green font-bold text-sm animate-pulse">{athlete.power}</p>
+                                        {/* Stats Grid */}
+                                        <div className="grid grid-cols-2 gap-3 text-left bg-black/20 rounded-xl p-4 border border-white/5">
+                                            <div>
+                                                <p className="text-[10px] text-gray-500 uppercase font-bold tracking-wider">Idade</p>
+                                                <p className="text-white font-bold text-sm">{athlete.age}</p>
+                                            </div>
+                                            <div>
+                                                <p className="text-[10px] text-gray-500 uppercase font-bold tracking-wider">Faixa</p>
+                                                <p className="text-white font-bold text-sm">{athlete.belt}</p>
+                                            </div>
+                                            <div className="col-span-2 mt-1">
+                                                <p className="text-[10px] text-gray-500 uppercase font-bold tracking-wider">Categoria</p>
+                                                <p className="text-white font-bold text-sm">{athlete.category}</p>
+                                            </div>
+                                            <div className="col-span-2 mt-2 pt-2 border-t border-white/5">
+                                                <p className="text-[10px] text-gray-500 uppercase font-bold tracking-wider">Superpoder</p>
+                                                <p className="text-neon-green font-bold text-sm animate-pulse">{athlete.power}</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
+
+                    {/* Mobile Scroll Indicator - Floating Arrow */}
+                    <div className="md:hidden flex justify-end pr-4 mt-2 pointer-events-none">
+                        <motion.div
+                            animate={{ x: [0, 10, 0], opacity: [0.5, 1, 0.5] }}
+                            transition={{ duration: 1.5, repeat: Infinity }}
+                            className="flex items-center gap-1 text-neon-green text-xs font-bold uppercase tracking-widest bg-black/50 px-3 py-1 rounded-full border border-white/10 backdrop-blur-md"
+                        >
+                            <span>Deslize</span>
+                            <ChevronsRight size={16} />
+                        </motion.div>
+                    </div>
+
                 </div>
             </div>
 

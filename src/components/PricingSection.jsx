@@ -205,13 +205,12 @@ export default function PricingSection({ isOpen, onClose, onOpen }) {
                                     <button
                                         onClick={onOpen}
                                         className={`
-w - full py - 4 rounded - xl font - bold uppercase tracking - widest text - sm transition - all duration - 300
-                                            flex items - center justify - center gap - 2 group - hover: gap - 3
+                                            w-full py-4 rounded-xl font-black uppercase tracking-widest text-sm transition-all duration-300
+                                            flex items-center justify-center gap-2 group-hover:gap-3
                                             ${tier.highlight
-                                                ? 'bg-neon-green text-black hover:bg-white shadow-[0_0_20px_rgba(204,255,0,0.2)]'
-                                                : 'bg-white/5 text-white border border-white/10 hover:bg-neon-green hover:text-black hover:border-neon-green'
-                                            }
-`}
+                                                ? 'bg-neon-green text-black hover:bg-white shadow-[0_0_20px_rgba(204,255,0,0.4)]'
+                                                : 'bg-white/10 text-white border border-white/10 hover:bg-neon-green hover:text-black hover:border-transparent'}
+                                        `}
                                     >
                                         Apoiar <ArrowRight size={16} />
                                     </button>
@@ -222,15 +221,28 @@ w - full py - 4 rounded - xl font - bold uppercase tracking - widest text - sm t
                 </div>
 
                 {/* Mobile Scroll Indicator - Floating Arrow */}
-                <div className="md:hidden flex justify-end pr-4 mt-2 pointer-events-none">
-                    <motion.div
+                <div className="md:hidden flex justify-end pr-4 mt-2 pointer-events-auto">
+                    <motion.button
+                        onClick={() => {
+                            const container = containerRef.current;
+                            if (container) {
+                                const maxScroll = container.scrollWidth - container.clientWidth;
+                                const cardWidth = container.clientWidth * 0.85;
+                                if (container.scrollLeft >= maxScroll - 10) {
+                                    container.scrollTo({ left: 0, behavior: 'smooth' });
+                                } else {
+                                    container.scrollBy({ left: cardWidth, behavior: 'smooth' });
+                                }
+                            }
+                        }}
+                        whileTap={{ scale: 0.95 }}
                         animate={{ x: [0, 10, 0], opacity: [0.5, 1, 0.5] }}
                         transition={{ duration: 1.5, repeat: Infinity }}
                         className="flex items-center gap-1 text-neon-green text-xs font-bold uppercase tracking-widest bg-black/50 px-3 py-1 rounded-full border border-white/10 backdrop-blur-md"
                     >
                         <span>Deslize</span>
                         <ChevronsRight size={16} />
-                    </motion.div>
+                    </motion.button>
                 </div>
 
             </div>

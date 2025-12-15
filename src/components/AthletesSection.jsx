@@ -69,10 +69,11 @@ export default function AthletesSection() {
                         className="flex md:grid md:grid-cols-2 lg:grid-cols-4 gap-6 overflow-x-auto pb-8 md:pb-0 snap-x snap-mandatory px-4 md:px-0 -mx-4 md:mx-0 scrollbar-hide pt-16"
                     >
                         {athletes.map((athlete, index) => (
-                            <div key={index} onClick={() => setSelectedAthlete(athlete)} className="min-w-[280px] md:min-w-0 snap-center relative group cursor-pointer pl-1">
+                            <div key={index} onClick={() => setSelectedAthlete(athlete)} className="min-w-[280px] md:min-w-0 snap-center relative group cursor-pointer pl-1 flex flex-col">
 
                                 {/* The Card Base (Glass) */}
                                 <div className={`
+                                    flex-1 flex flex-col
                                     relative mt-12 bg-[#111]/40 backdrop-blur-xl rounded-3xl p-6 pt-16
                                     border-2 ${athlete.color}
                                     shadow-lg shadow-black/50
@@ -141,15 +142,28 @@ export default function AthletesSection() {
                     </div>
 
                     {/* Mobile Scroll Indicator - Floating Arrow */}
-                    <div className="md:hidden flex justify-end pr-4 mt-2 pointer-events-none">
-                        <motion.div
+                    <div className="md:hidden flex justify-end pr-4 mt-2 pointer-events-auto">
+                        <motion.button
+                            onClick={() => {
+                                const container = containerRef.current;
+                                if (container) {
+                                    const maxScroll = container.scrollWidth - container.clientWidth;
+                                    const cardWidth = 300;
+                                    if (container.scrollLeft >= maxScroll - 10) {
+                                        container.scrollTo({ left: 0, behavior: 'smooth' });
+                                    } else {
+                                        container.scrollBy({ left: cardWidth, behavior: 'smooth' });
+                                    }
+                                }
+                            }}
+                            whileTap={{ scale: 0.95 }}
                             animate={{ x: [0, 10, 0], opacity: [0.5, 1, 0.5] }}
                             transition={{ duration: 1.5, repeat: Infinity }}
                             className="flex items-center gap-1 text-neon-green text-xs font-bold uppercase tracking-widest bg-black/50 px-3 py-1 rounded-full border border-white/10 backdrop-blur-md"
                         >
                             <span>Deslize</span>
                             <ChevronsRight size={16} />
-                        </motion.div>
+                        </motion.button>
                     </div>
 
                 </div>

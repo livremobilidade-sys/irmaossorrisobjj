@@ -41,7 +41,7 @@ export default function PricingSection({ isOpen, onClose, onOpen }) {
 
                             <div className="flex flex-col items-center justify-center gap-6">
                                 <img
-                                    src="/apoia-logo.png"
+                                    src={`${import.meta.env.BASE_URL}apoia-logo.png`}
                                     alt="Apoia.se Logo"
                                     className="h-12 object-contain"
                                 />

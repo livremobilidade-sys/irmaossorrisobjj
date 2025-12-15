@@ -3,8 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Shield, Medal, ChevronRight, ChevronLeft } from 'lucide-react'
 
 const slides = [
-    "/team-1.jpg",
-    "/team-2.jpg"
+    import.meta.env.BASE_URL + "team-1.jpg",
+    import.meta.env.BASE_URL + "team-2.jpg"
 ]
 
 export default function LeadershipSection() {
@@ -130,7 +130,7 @@ export default function LeadershipSection() {
                                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                                 className="w-32 h-32 rounded-full bg-black/50 border border-white/20 flex items-center justify-center shadow-[0_0_30px_rgba(255,255,255,0.15)] relative group overflow-hidden"
                             >
-                                <img src="/logo-mario.jpg" alt="Mestre Mario Leitão" className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity" />
+                                <img src={`${import.meta.env.BASE_URL}logo-mario.jpg`} alt="Mestre Mario Leitão" className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity" />
                             </motion.div>
 
                             {/* Team Logo (CIA Paulista) */}
@@ -139,7 +139,7 @@ export default function LeadershipSection() {
                                 transition={{ duration: 4, delay: 1, repeat: Infinity, ease: "easeInOut" }}
                                 className="w-32 h-32 rounded-full bg-black/50 border border-neon-green/30 flex items-center justify-center shadow-[0_0_30px_rgba(164,214,94,0.3)] relative group overflow-hidden"
                             >
-                                <img src="/logo-cia.jpg" alt="CIA Paulista" className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity" />
+                                <img src={`${import.meta.env.BASE_URL}logo-cia.jpg`} alt="CIA Paulista" className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity" />
                             </motion.div>
 
                             {/* Action Fitness Logo */}
@@ -149,7 +149,7 @@ export default function LeadershipSection() {
                                 className="w-32 h-32 rounded-full bg-black/50 border border-orange-500/30 flex items-center justify-center shadow-[0_0_30px_rgba(249,115,22,0.3)] relative group overflow-hidden"
                             >
                                 <div className="absolute inset-0 bg-white p-2"> {/* Added white background as logo has transparency/black text */}
-                                    <img src="/logo-action.png" alt="Academia Action Fitness" className="w-full h-full object-contain" />
+                                    <img src={`${import.meta.env.BASE_URL}logo-action.png`} alt="Academia Action Fitness" className="w-full h-full object-contain" />
                                 </div>
                             </motion.div>
                         </div>

@@ -32,7 +32,7 @@ export default function AthletesSection() {
                         container.scrollBy({ left: cardWidth, behavior: 'smooth' });
                     }
                 }
-            }, 3000); // 3 seconds per slide
+            }, 5000); // 5 seconds per slide
         };
 
         startAutoScroll();
@@ -67,9 +67,9 @@ export default function AthletesSection() {
                                 {/* The Card Base (Glass) */}
                                 <div className={`
                                     relative mt-12 bg-[#111]/40 backdrop-blur-xl rounded-3xl p-6 pt-16
-                                    border border-white/10 ${athlete.color} border-t-4
+                                    border-2 ${athlete.color}
                                     shadow-lg shadow-black/50
-                                    transition-all duration-300 
+                                    transition-all duration-300
                                     group-hover:bg-[#1a1a1a]/80 group-hover:border-opacity-100 group-hover:-translate-y-2 group-hover:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.8)]
                                 `}>
                                     {/* Pop-out Image Area */}
@@ -261,6 +261,6 @@ export default function AthletesSection() {
                     animation: float-slow 4s ease-in-out infinite 1.5s;
                 }
             `}</style>
-        </section>
+        </section >
     )
 }

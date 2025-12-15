@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Check, Star, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react'
+import { Check, Star, ArrowRight, ChevronLeft, ChevronRight, ChevronsRight } from 'lucide-react'
 
 import { useContent } from '../context/ContentContext'
 
@@ -8,12 +8,44 @@ export default function PricingSection({ isOpen, onClose, onOpen }) {
     const { content } = useContent()
     const { pricing } = content
     const { tiers } = pricing
+    const containerRef = useRef(null)
+
+    // Mobile Auto-Scroll Loop
+    useEffect(() => {
+        const container = containerRef.current;
+        if (!container) return;
+
+        let interval;
+        const startAutoScroll = () => {
+            interval = setInterval(() => {
+                // Only scroll if window is mobile size
+                if (window.innerWidth >= 768) return;
+
+                if (container) {
+                    const maxScroll = container.scrollWidth - container.clientWidth;
+                    const cardWidth = container.clientWidth * 0.85; // approx 85vw
+
+                    if (container.scrollLeft >= maxScroll - 10) {
+                        // Reset to start
+                        container.scrollTo({ left: 0, behavior: 'smooth' });
+                    } else {
+                        // Scroll next
+                        container.scrollBy({ left: cardWidth, behavior: 'smooth' });
+                    }
+                }
+            }, 5000); // 5 seconds per slide
+        };
+
+        startAutoScroll();
+
+        return () => clearInterval(interval);
+    }, []);
 
     return (
-        <section id="pricing" className="py-24 bg-gradient-to-b from-[#050505] via-[#0b1207] to-[#050505] relative overflow-hidden border-t border-neon-green/10">
+        <section id="pricing" className="py-24 bg-[#080808] relative overflow-hidden border-t border-neon-green/5">
             {/* Background Atmosphere */}
             <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 brightness-100 contrast-150 mix-blend-overlay pointer-events-none"></div>
-            <div className="absolute bottom-0 left-0 w-full h-[500px] bg-gradient-to-t from-black to-transparent pointer-events-none z-0"></div>
+            <div className="absolute top-0 right-0 w-full h-[500px] bg-gradient-to-b from-neon-green/5 to-transparent pointer-events-none z-0"></div>
 
             <AnimatePresence>
                 {isOpen && (
@@ -91,7 +123,10 @@ export default function PricingSection({ isOpen, onClose, onOpen }) {
                 </div>
 
                 {/* Cards Container - Horizontal Scroll on Mobile, Grid on Desktop */}
-                <div className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 overflow-x-auto pb-12 md:pb-0 snap-x snap-mandatory px-2 md:px-0 -mx-4 md:mx-0 scrollbar-hide">
+                <div
+                    ref={containerRef}
+                    className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 overflow-x-auto pb-12 md:pb-0 snap-x snap-mandatory px-2 md:px-0 -mx-4 md:mx-0 scrollbar-hide"
+                >
                     {tiers.map((tier, index) => {
                         const isPremium = index >= 4; // Brown/Black belts
                         return (
@@ -178,15 +213,16 @@ export default function PricingSection({ isOpen, onClose, onOpen }) {
                     })}
                 </div>
 
-                {/* Mobile Scroll Indicator Hint */}
-                <div className="md:hidden flex justify-center gap-2 mt-4">
-                    <div className="w-16 h-1 bg-white/10 rounded-full overflow-hidden">
-                        <motion.div
-                            animate={{ x: [-20, 20] }}
-                            transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }}
-                            className="w-8 h-full bg-neon-green/50 rounded-full"
-                        />
-                    </div>
+                {/* Mobile Scroll Indicator - Floating Arrow */}
+                <div className="md:hidden flex justify-end pr-4 mt-2 pointer-events-none">
+                    <motion.div
+                        animate={{ x: [0, 10, 0], opacity: [0.5, 1, 0.5] }}
+                        transition={{ duration: 1.5, repeat: Infinity }}
+                        className="flex items-center gap-1 text-neon-green text-xs font-bold uppercase tracking-widest bg-black/50 px-3 py-1 rounded-full border border-white/10 backdrop-blur-md"
+                    >
+                        <span>Deslize</span>
+                        <ChevronsRight size={16} />
+                    </motion.div>
                 </div>
 
             </div>

@@ -132,7 +132,7 @@ export default function PricingSection({ isOpen, onClose, onOpen }) {
                     onTouchEnd={() => setIsPaused(false)}
                     onMouseEnter={() => setIsPaused(true)}
                     onMouseLeave={() => setIsPaused(false)}
-                    className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 overflow-x-auto pb-12 md:pb-0 snap-x snap-mandatory px-2 md:px-0 -mx-4 md:mx-0 scrollbar-hide"
+                    className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 overflow-x-auto md:overflow-visible pb-12 md:pb-0 snap-x snap-mandatory px-2 md:px-0 -mx-4 md:mx-0 scrollbar-hide"
                 >
                     {tiers.map((tier, index) => {
                         const isPremium = index >= 4; // Brown/Black belts
@@ -142,19 +142,18 @@ export default function PricingSection({ isOpen, onClose, onOpen }) {
                                 initial={{ opacity: 0, y: 50 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
-                                transition={{ delay: index * 0.1, duration: 0.6 }}
+                                transition={{ delay: index * 0.2, duration: 0.6 }}
                                 className={`
-min - w - [85vw] md: min - w - 0 snap - center
-                                    relative flex flex - col justify - between group
-rounded - 2xl p - 8
-bg - [#111] / 40 backdrop - blur - xl
-                                    border hover: border - neon - green / 50 transition - all duration - 500
+                                    min-w-[85vw] md:min-w-0 snap-center
+                                    relative flex flex-col justify-between group
+                                    rounded-2xl p-8 
+                                    bg-[#111]/40 backdrop-blur-sm
+                                    border hover:border-neon-green/50 transition-all duration-500
                                     ${tier.highlight
                                         ? 'border-neon-green/30 shadow-[0_0_30px_rgba(204,255,0,0.1)]'
-                                        : 'border-white/5 shadow-lg shadow-black/50'
-                                    }
-hover: -translate - y - 2 hover: shadow - [0_10px_40px_rgba(0, 0, 0, 0.7)]
-    `}
+                                        : 'border-white/5 shadow-lg shadow-black/50'}
+                                    hover:-translate-y-2 hover:shadow-[0_10px_40px_rgba(0,0,0,0.7)]
+                                `}
                             >
                                 {/* Floating Background Elements visual check */}
                                 <div className="absolute inset-0 overflow-hidden rounded-2xl pointer-events-none">

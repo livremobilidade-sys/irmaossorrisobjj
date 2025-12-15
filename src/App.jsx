@@ -6,7 +6,7 @@ import AdminPage from './pages/AdminPage'
 export default function App() {
     return (
         <ContentProvider>
-            <Router>
+            <Router basename={import.meta.env.BASE_URL}>
                 <div className="app-container">
                     <Routes>
                         <Route path="/" element={<Home />} />

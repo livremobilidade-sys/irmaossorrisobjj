@@ -5,12 +5,15 @@ import { useContent } from '../context/ContentContext'
 
 export default function AthletesSection() {
     const [selectedAthlete, setSelectedAthlete] = useState(null)
+    const [isPaused, setIsPaused] = useState(false)
     const containerRef = useRef(null)
     const { content } = useContent()
     const { athletes } = content
 
     // Mobile Auto-Scroll Loop
     useEffect(() => {
+        if (isPaused) return;
+
         const container = containerRef.current;
         if (!container) return;
 
@@ -38,7 +41,7 @@ export default function AthletesSection() {
         startAutoScroll();
 
         return () => clearInterval(interval);
-    }, []);
+    }, [isPaused]);
 
     return (
         <section id="athletes" className="py-24 bg-black relative overflow-hidden">
@@ -59,6 +62,10 @@ export default function AthletesSection() {
                     {/* Cards Container - Mobile Scroll / Desktop Grid */}
                     <div
                         ref={containerRef}
+                        onTouchStart={() => setIsPaused(true)}
+                        onTouchEnd={() => setIsPaused(false)}
+                        onMouseEnter={() => setIsPaused(true)}
+                        onMouseLeave={() => setIsPaused(false)}
                         className="flex md:grid md:grid-cols-2 lg:grid-cols-4 gap-6 overflow-x-auto pb-8 md:pb-0 snap-x snap-mandatory px-4 md:px-0 -mx-4 md:mx-0 scrollbar-hide pt-16"
                     >
                         {athletes.map((athlete, index) => (

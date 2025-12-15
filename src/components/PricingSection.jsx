@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Check, Star, ArrowRight, ChevronLeft, ChevronRight, ChevronsRight } from 'lucide-react'
 
@@ -8,10 +8,13 @@ export default function PricingSection({ isOpen, onClose, onOpen }) {
     const { content } = useContent()
     const { pricing } = content
     const { tiers } = pricing
+    const [isPaused, setIsPaused] = useState(false)
     const containerRef = useRef(null)
 
     // Mobile Auto-Scroll Loop
     useEffect(() => {
+        if (isPaused) return;
+
         const container = containerRef.current;
         if (!container) return;
 
@@ -39,7 +42,7 @@ export default function PricingSection({ isOpen, onClose, onOpen }) {
         startAutoScroll();
 
         return () => clearInterval(interval);
-    }, []);
+    }, [isPaused]);
 
     return (
         <section id="pricing" className="py-24 bg-[#080808] relative overflow-hidden border-t border-neon-green/5">
@@ -73,7 +76,7 @@ export default function PricingSection({ isOpen, onClose, onOpen }) {
 
                             <div className="flex flex-col items-center justify-center gap-6">
                                 <img
-                                    src={`${import.meta.env.BASE_URL}apoia-logo.png`}
+                                    src={`${import.meta.env.BASE_URL} apoia - logo.png`}
                                     alt="Apoia.se Logo"
                                     className="h-12 object-contain"
                                 />
@@ -125,6 +128,10 @@ export default function PricingSection({ isOpen, onClose, onOpen }) {
                 {/* Cards Container - Horizontal Scroll on Mobile, Grid on Desktop */}
                 <div
                     ref={containerRef}
+                    onTouchStart={() => setIsPaused(true)}
+                    onTouchEnd={() => setIsPaused(false)}
+                    onMouseEnter={() => setIsPaused(true)}
+                    onMouseLeave={() => setIsPaused(false)}
                     className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 overflow-x-auto pb-12 md:pb-0 snap-x snap-mandatory px-2 md:px-0 -mx-4 md:mx-0 scrollbar-hide"
                 >
                     {tiers.map((tier, index) => {
@@ -137,16 +144,17 @@ export default function PricingSection({ isOpen, onClose, onOpen }) {
                                 viewport={{ once: true }}
                                 transition={{ delay: index * 0.1, duration: 0.6 }}
                                 className={`
-                                    min-w-[85vw] md:min-w-0 snap-center
-                                    relative flex flex-col justify-between group
-                                    rounded-2xl p-8 
-                                    bg-[#111]/40 backdrop-blur-xl
-                                    border hover:border-neon-green/50 transition-all duration-500
+min - w - [85vw] md: min - w - 0 snap - center
+                                    relative flex flex - col justify - between group
+rounded - 2xl p - 8
+bg - [#111] / 40 backdrop - blur - xl
+                                    border hover: border - neon - green / 50 transition - all duration - 500
                                     ${tier.highlight
                                         ? 'border-neon-green/30 shadow-[0_0_30px_rgba(204,255,0,0.1)]'
-                                        : 'border-white/5 shadow-lg shadow-black/50'}
-                                    hover:-translate-y-2 hover:shadow-[0_10px_40px_rgba(0,0,0,0.7)]
-                                `}
+                                        : 'border-white/5 shadow-lg shadow-black/50'
+                                    }
+hover: -translate - y - 2 hover: shadow - [0_10px_40px_rgba(0, 0, 0, 0.7)]
+    `}
                             >
                                 {/* Floating Background Elements visual check */}
                                 <div className="absolute inset-0 overflow-hidden rounded-2xl pointer-events-none">
@@ -157,7 +165,7 @@ export default function PricingSection({ isOpen, onClose, onOpen }) {
                                     {/* Header */}
                                     <div className="flex justify-between items-start mb-6 relative z-10">
                                         <div>
-                                            <h3 className={`text-2xl font-black uppercase tracking-tighter mb-1 ${tier.highlight ? 'text-neon-green drop-shadow-[0_0_8px_rgba(204,255,0,0.5)]' : 'text-white'}`}>
+                                            <h3 className={`text - 2xl font - black uppercase tracking - tighter mb - 1 ${tier.highlight ? 'text-neon-green drop-shadow-[0_0_8px_rgba(204,255,0,0.5)]' : 'text-white'} `}>
                                                 {tier.name}
                                             </h3>
                                             <p className="text-xs font-bold text-gray-500 uppercase tracking-widest">{tier.subtitle}</p>
@@ -189,7 +197,7 @@ export default function PricingSection({ isOpen, onClose, onOpen }) {
                                             <span className="text-[10px] uppercase tracking-wider text-gray-500 font-bold">Apoio Mensal</span>
                                             <div className="flex items-baseline text-white">
                                                 <span className="text-sm font-light mr-1">R$</span>
-                                                <span className={`text-3xl font-black ${isPremium ? 'text-neon-green' : ''}`}>{tier.price}</span>
+                                                <span className={`text - 3xl font - black ${isPremium ? 'text-neon-green' : ''} `}>{tier.price}</span>
                                                 <span className="text-sm text-gray-400 ml-1">/mês</span>
                                             </div>
                                         </div>
@@ -198,12 +206,13 @@ export default function PricingSection({ isOpen, onClose, onOpen }) {
                                     <button
                                         onClick={onOpen}
                                         className={`
-                                            w-full py-4 rounded-xl font-bold uppercase tracking-widest text-sm transition-all duration-300
-                                            flex items-center justify-center gap-2 group-hover:gap-3
+w - full py - 4 rounded - xl font - bold uppercase tracking - widest text - sm transition - all duration - 300
+                                            flex items - center justify - center gap - 2 group - hover: gap - 3
                                             ${tier.highlight
                                                 ? 'bg-neon-green text-black hover:bg-white shadow-[0_0_20px_rgba(204,255,0,0.2)]'
-                                                : 'bg-white/5 text-white border border-white/10 hover:bg-neon-green hover:text-black hover:border-neon-green'}
-                                        `}
+                                                : 'bg-white/5 text-white border border-white/10 hover:bg-neon-green hover:text-black hover:border-neon-green'
+                                            }
+`}
                                     >
                                         Apoiar <ArrowRight size={16} />
                                     </button>

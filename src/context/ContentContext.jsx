@@ -14,7 +14,7 @@ const defaultContent = {
         title: "Quem Somos",
         text1: "Treinamos para vencer, mas lutamos para evoluir. Uma irmandade moldada no tatame, onde cada gota de suor constrói o caminho para o topo.",
         quote: "Cada medalha no peito carrega a esperança de um futuro brilhante. O Jiu-Jitsu é mais que um esporte, é nossa ferramenta de transformação.",
-        image: "/about-overlay.png"
+        image: import.meta.env.BASE_URL + "about-overlay.png"
     },
     athletes: [
         {
@@ -27,8 +27,8 @@ const defaultContent = {
             power: "Guardeiro",
             dream: "Lutar Com o Mica Galvão",
             color: "border-blue-500",
-            img: "/athlete-jp.jpg",
-            modalImg: "/athlete-jp-modal.jpg",
+            img: import.meta.env.BASE_URL + "athlete-jp.jpg",
+            modalImg: import.meta.env.BASE_URL + "athlete-jp-modal.jpg",
             resume: "Atleta de alto rendimento de Brazilian Jiu-Jitsu, competindo na classe Adulto, Faixa Azul. Reconhecido pela excelência técnica como especialista em jogo de guarda ('guardeiro'). João Pedro combina juventude (18 anos) com uma maturidade competitiva comprovada por um extenso quadro de medalhas.",
             titles: [
                 "Vice-Campeão Mundial CBJJE (2025)",
@@ -49,8 +49,8 @@ const defaultContent = {
             power: "Armlock",
             dream: "Conquistar o Grand Slam",
             color: "border-orange-500",
-            img: "/athlete-chico.jpg",
-            modalImg: "/athlete-chico-modal.jpg",
+            img: import.meta.env.BASE_URL + "athlete-chico.jpg",
+            modalImg: import.meta.env.BASE_URL + "athlete-chico-modal.jpg",
             resume: "Jovem talento do Brazilian Jiu-Jitsu, competindo na classe Juvenil A, Faixa Laranja. Conhecido nos tatames pela precisão técnica, Marcos é um finalizador nato, destacando-se como especialista na chave de braço (Armlock). Aos 12 anos, 'El Chico' já demonstra uma consistência competitiva impressionante.",
             titles: [
                 "26x Medalhista de Ouro",
@@ -70,8 +70,8 @@ const defaultContent = {
             power: "Triângulo",
             dream: "Conquistar o Mundial",
             color: "border-yellow-400",
-            img: "/athlete-pato-card.jpg",
-            modalImg: "/athlete-pato-modal.jpg",
+            img: import.meta.env.BASE_URL + "athlete-pato-card.jpg",
+            modalImg: import.meta.env.BASE_URL + "athlete-pato-modal.jpg",
             resume: "Atleta promissor das categorias de base do Brazilian Jiu-Jitsu, competindo na classe Juvenil A, Faixa Amarela. Paulo Felipe, o 'Pato', destaca-se pela inteligência tática e guarda ofensiva, sendo reconhecido como especialista na finalização por triângulo. Aos 11 anos, já apresenta um currículo vitorioso.",
             titles: [
                 "Campeão de Cinturão (2025)",
@@ -92,8 +92,8 @@ const defaultContent = {
             power: "Estrangulamento",
             dream: "Chegar a Faixa Vermelha",
             color: "border-gray-200",
-            img: "/athlete-jorginho-card.jpg",
-            modalImg: "/athlete-jorginho-modal.jpg",
+            img: import.meta.env.BASE_URL + "athlete-jorginho-card.jpg",
+            modalImg: import.meta.env.BASE_URL + "athlete-jorginho-modal.jpg",
             resume: "Talento precoce do Brazilian Jiu-Jitsu, competindo na classe Mirim, Faixa Cinza. Aos 7 anos, 'Jorginho' já demonstra postura de atleta e técnica apurada, destacando-se pela eficiência nos estrangulamentos. Sua trajetória inicial nas categorias de base revela um potencial imenso.",
             titles: [
                 "7x Medalhista de Ouro",
@@ -261,7 +261,7 @@ const defaultContent = {
             answer: "Toda ajuda fortalece nossa armadura! Se você deseja doar kimonos, suplementos, milhas aéreas ou um valor específico fora dos planos, chame nossa equipe no botão de WhatsApp abaixo."
         }
     ],
-    version: 1.4 // Increment this to force update checks
+    version: 1.5 // Increment this to force update checks
 };
 
 export function ContentProvider({ children }) {

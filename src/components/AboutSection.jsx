@@ -65,12 +65,12 @@ export default function AboutSection() {
                             {/* Logos Overlays - Positioned on the borders (Floating) */}
                             {/* Mario Leitao Logo (Bottom Left) */}
                             <div className="absolute -bottom-8 -left-8 w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden border-4 border-[#050505] shadow-[0_10px_30px_rgba(0,0,0,0.5)] z-20 hover:scale-110 transition-transform duration-300 animate-float-delayed">
-                                <img src="/logo-mario.jpg" alt="Mario Leitao" className="w-full h-full object-cover" />
+                                <img src={`${import.meta.env.BASE_URL}logo-mario.jpg`} alt="Mario Leitao" className="w-full h-full object-cover" />
                             </div>
 
                             {/* CIA Paulista Logo (Right Edge) */}
                             <div className="absolute top-1/2 -right-8 md:-right-12 -translate-y-1/2 w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden border-4 border-[#050505] shadow-[0_10px_30px_rgba(0,0,0,0.5)] z-20 hover:scale-110 transition-transform duration-300 animate-float-slow">
-                                <img src="/logo-cia.jpg" alt="CIA Paulista" className="w-full h-full object-cover" />
+                                <img src={`${import.meta.env.BASE_URL}logo-cia.jpg`} alt="CIA Paulista" className="w-full h-full object-cover" />
                             </div>
                         </motion.div>
                     </div>

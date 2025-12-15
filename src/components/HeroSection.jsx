@@ -3,7 +3,7 @@ import { ArrowRight, Medal, Disc, Award, ChevronDown } from 'lucide-react'
 
 import { useContent } from '../context/ContentContext'
 
-export default function HeroSection() {
+export default function HeroSection({ onOpenPricing }) {
     const { content } = useContent()
     const { hero } = content
 
@@ -45,6 +45,23 @@ export default function HeroSection() {
                     <p className="text-gray-300 text-sm md:text-base font-medium max-w-md leading-relaxed mb-6 border-l-2 border-neon-green pl-4">
                         {hero.subtitle}
                     </p>
+
+                    <motion.button
+                        onClick={onOpenPricing}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="
+                            px-8 py-4 rounded-xl 
+                            bg-neon-green text-black font-black uppercase tracking-widest text-sm
+                            shadow-[0_0_20px_rgba(204,255,0,0.4)]
+                            hover:bg-white hover:text-black hover:shadow-[0_0_30px_rgba(255,255,255,0.6)]
+                            transition-all duration-300
+                            flex items-center gap-2 group
+                        "
+                    >
+                        <span>Quero Apoiar</span>
+                        <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                    </motion.button>
 
 
                 </motion.div>

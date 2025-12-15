@@ -16,7 +16,7 @@ export default function Home() {
         <div className="min-h-screen bg-black flex items-center justify-center p-0 md:p-8">
             <TopNav onOpenPricing={() => setPricingModalOpen(true)} />
             <main className="w-full max-w-5xl bg-brand-dark text-white selection:bg-neon-green selection:text-brand-dark md:rounded-[2rem] overflow-hidden shadow-2xl ring-1 ring-white/10 relative">
-                <HeroSection />
+                <HeroSection onOpenPricing={() => setPricingModalOpen(true)} />
                 <AboutSection />
                 <AthletesSection />
                 <LeadershipSection />
